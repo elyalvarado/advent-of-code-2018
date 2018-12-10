@@ -6,7 +6,7 @@ def parse_claim claim
   { id: id, position: { x: position_x, y: position_y}, dimension: { x: dimension_x, y: dimension_y }}
 end
 
-def overlapping_fabric claims
+def fabric_matrix_for claims
   fabric_matrix = []
   claims.each do |claim|
     parsed_claim = parse_claim(claim)
@@ -18,6 +18,11 @@ def overlapping_fabric claims
       end
     end
   end
+  fabric_matrix
+end
+
+def overlapping_fabric claims
+  fabric_matrix = fabric_matrix_for(claims)
   fabric_matrix.inject(0) { |sum,rows| sum += (rows && rows.find_all { |column| column && column > 1 }.size) || 0 }
 end
 
