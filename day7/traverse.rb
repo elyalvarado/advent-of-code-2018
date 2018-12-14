@@ -25,6 +25,7 @@ def next_node_for tree:, pending:, traversed:
     end
     return node if all_parents_traversed
   end
+  return nil
 end
 
 def traverse node_rules

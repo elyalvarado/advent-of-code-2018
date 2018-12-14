@@ -1,5 +1,6 @@
 require 'rspec'
 require_relative '../day7/traverse'
+require_relative '../day7/multi_thread_traverse'
 
 test_input = [
   'Step C must be finished before step A can begin.',
@@ -18,3 +19,9 @@ describe '#traverse' do
   end
 end
 
+describe '#multi_thread_traverse' do
+  it 'matches the example' do
+    expected_output = 15
+    expect(multi_thread_traverse(test_input, max_workers: 2, base_step_duration: 0)).to eq(expected_output)
+  end
+end
