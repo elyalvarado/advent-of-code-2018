@@ -14,13 +14,17 @@ def largest_total_power serial_number
 
       max_area_dimension = [x,y].min
 
+      row_accumulator = 0
+      column_accumulator = 0
       max_area_dimension.times do |cell_size|
         total = cell_power
         top_left_corner_cell = matrix[i-cell_size][j-cell_size]
-        total += top_left_corner_cell.totals[cell_size-1] if cell_size > 0
-        cell_size.times do |k|
-          total += matrix[i][j-k-1].power
-          total += matrix[i-k-1][j].power
+
+        if cell_size > 0
+          row_accumulator += matrix[i][j-cell_size].power
+          column_accumulator += matrix[i-cell_size][j].power
+          total += top_left_corner_cell.totals[cell_size-1]
+          total += row_accumulator + column_accumulator
         end
 
         top_left_corner_cell.totals[cell_size] = total
@@ -28,7 +32,6 @@ def largest_total_power serial_number
         if total > current_max
           max_coordinates = top_left_corner_cell.coordinates + [cell_size + 1]
           current_max = total
-          # puts "new max coordinates: #{max_coordinates.inspect} calculating cell #{matrix[i][j].inspect}"
         end
       end
     end
